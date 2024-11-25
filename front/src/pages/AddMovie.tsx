@@ -7,17 +7,16 @@ import useForm from './../hooks/useForm ';
 const AddMovie = () => {
   const { formData, handleInputChange, handleFileChange, resetForm } = useForm();
   const [loading, setLoading] = useState(false);
-  const [imageError, setImageError] = useState<string | null>(null); // Estado para armazenar erro de imagem
+  const [imageError, setImageError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Função de validação de imagem
   const validateImage = (file: File) => {
     const validFormats = ['image/png', 'image/jpeg'];
     if (!validFormats.includes(file.type)) {
       setImageError('Por favor, envie uma imagem no formato PNG ou JPG.');
       return false;
     }
-    setImageError(null); // Limpar erro se a imagem for válida
+    setImageError(null);
     return true;
   };
 
@@ -26,14 +25,14 @@ const AddMovie = () => {
     setLoading(true);
 
     try {
-      const userId = localStorage.getItem('userId'); // Pegando o ID do usuário logado
+      const userId = localStorage.getItem('userId');
       if (!userId) {
         throw new Error('ID do usuário não encontrado.');
       }
 
       const formattedData = {
         ...formData,
-        actors: formData.actors.split(',').map((actor) => actor.trim()), // Transformando atores em array
+        actors: formData.actors.split(',').map((actor) => actor.trim()),
       };
 
       const formDataToSend = new FormData();
@@ -41,12 +40,12 @@ const AddMovie = () => {
       formDataToSend.append('genre', formattedData.genre);
       formDataToSend.append('director', formattedData.director);
       formDataToSend.append('actors', JSON.stringify(formattedData.actors));
-      formDataToSend.append('description', formattedData.description); // Adicionando description
+      formDataToSend.append('description', formattedData.description);
       if (formattedData.imageUrl && validateImage(formattedData.imageUrl)) {
         formDataToSend.append('imageUrl', formattedData.imageUrl);
       } else {
         setLoading(false);
-        return; // Impede o envio se a imagem não for válida
+        return;
       }
 
       const savedMovie = await saveMovie(userId, formDataToSend);
@@ -54,7 +53,7 @@ const AddMovie = () => {
 
       navigate('/movie-detail', { state: { movie: savedMovie } });
 
-      resetForm(); // Limpando o formulário
+      resetForm();
     } catch (error: any) {
       alert(error?.response?.data?.message || 'Erro ao salvar filme.');
     } finally {
@@ -62,13 +61,12 @@ const AddMovie = () => {
     }
   };
 
-  // Função para manipular mudanças de arquivo
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file && !validateImage(file)) {
-      return; // Retorna se o arquivo não for válido
+      return;
     }
-    handleFileChange(e); // Se a imagem for válida, chama o handleFileChange
+    handleFileChange(e);
   };
 
   return (
@@ -109,10 +107,10 @@ const AddMovie = () => {
           <input
             type="file"
             name="imageUrl"
-            onChange={handleImageChange} // Alterado para a função de validação
+            onChange={handleImageChange}
             className="border p-2 rounded w-full"
           />
-          {imageError && <p className="text-red-500 text-sm">{imageError}</p>} {/* Exibe mensagem de erro */}
+          {imageError && <p className="text-red-500 text-sm">{imageError}</p>}
         </div>
         <button
           type="submit"

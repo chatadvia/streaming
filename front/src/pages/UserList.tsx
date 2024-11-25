@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { User } from '../types/types';
-import { fetchUsers } from '../services/userService'; // Função de serviço para buscar usuários
+import { fetchUsers } from '../services/userService';
 
 const UsersList = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -9,10 +9,9 @@ const UsersList = () => {
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState({ name: '', email: '', role: '' });
 
-  // Função para buscar usuários da API
   const getUsers = async () => {
     try {
-      const usersData = await fetchUsers(); // Chama a função do serviço
+      const usersData = await fetchUsers();
       setUsers(usersData);
       setLoading(false);
     } catch (error: any) {
@@ -21,18 +20,15 @@ const UsersList = () => {
     }
   };
 
-  // UseEffect para chamar a função ao carregar o componente
   useEffect(() => {
     getUsers();
   }, []);
 
-  // Atualiza os filtros
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value.toLowerCase() }));
   };
 
-  // Aplica os filtros aos usuários
   const filteredUsers = users.filter((user: User) => {
     return (
       (filters.name ? user.name.toLowerCase().includes(filters.name) : true) &&
@@ -77,9 +73,9 @@ const UsersList = () => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredUsers.map((user: User) => (
             <Link
-              to={`/user-detail`} // Rota para os detalhes do usuário
+              to={`/user-detail`}
               key={user.id}
-              state={{ user }} // Passa o usuário como state
+              state={{ user }}
               className="cursor-pointer border p-4 rounded shadow hover:shadow-lg transition"
             >
               <h2 className="text-lg font-bold text-center">{user.name}</h2>

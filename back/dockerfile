@@ -1,0 +1,25 @@
+# Usando a imagem oficial do Node.js
+FROM node:16
+
+# Defina o diretório de trabalho dentro do container
+WORKDIR /usr/src/app
+
+# Copie o package.json e package-lock.json (caso exista) para o container
+COPY package*.json ./
+
+# Instale as dependências
+RUN npm install
+
+# Copie todos os arquivos do projeto para dentro do container
+COPY . .
+
+# Execute o build da aplicação (se você usar um comando de build, por exemplo, TypeScript ou bundler)
+RUN npm run build
+
+RUN npm run start
+
+# Exponha a porta que sua aplicação vai rodar (3000 é um exemplo, altere conforme necessário)
+EXPOSE 3000
+
+# Defina o comando para rodar a aplicação
+CMD ["npm", "run", "start"]

@@ -13,27 +13,24 @@ interface RatingModalProps {
 const RatingModal: React.FC<RatingModalProps> = ({ isOpen, initialRating, movieId, userId, onClose }) => {
   const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [selectedRating, setSelectedRating] = useState<number>(initialRating);
-  const [loading, setLoading] = useState(false); // Para controlar o estado de carregamento
-  const [error, setError] = useState<string | null>(null); // Para armazenar erros
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Verifica se o clique ocorreu fora do modal
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        onClose(); // Fecha o modal se clicar fora
+        onClose();
       }
     };
 
-    // Adiciona o listener de clique quando o modal está aberto
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
     }
 
-    // Cleanup para remover o listener quando o modal for fechado ou componente desmontado
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -57,11 +54,10 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, initialRating, movieI
     setLoading(true);
     setError(null);
     try {
-      // Chama a função de serviço para enviar a avaliação
       await rateMovie(movieId, userId, selectedRating);
-      alert('Avaliação enviada com sucesso!'); // Feedback simples
+      alert('Avaliação enviada com sucesso!');
       window.location.reload();
-      onClose(); // Fecha o modal após o sucesso
+      onClose();
     } catch (error) {
       console.error(error);
       setError('Ocorreu um erro ao enviar sua avaliação. Tente novamente.');
@@ -83,7 +79,6 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, initialRating, movieI
           Você selecionou <span className="font-bold">{currentRating}</span> estrelas.
         </p>
 
-        {/* Seção de estrelas */}
         <div className="flex justify-center space-x-2 mb-6">
           {[1, 2, 3, 4].map((index) => (
             <span
@@ -111,7 +106,7 @@ const RatingModal: React.FC<RatingModalProps> = ({ isOpen, initialRating, movieI
         <div className="flex justify-center space-x-4">
         <button
             onClick={handleConfirm}
-            disabled={loading} // Desativa o botão durante o carregamento
+            disabled={loading}
             className={`${
               loading ? 'bg-blue-300' : 'bg-blue-500 hover:bg-blue-600'
             } text-white px-4 py-2 rounded transition`}

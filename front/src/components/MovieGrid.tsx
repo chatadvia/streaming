@@ -13,7 +13,6 @@ const MovieGrid: React.FC = () => {
       if (scrollLeft > 0) {
         carouselRef.current.scrollBy({ left: -carouselRef.current.offsetWidth, behavior: 'smooth' });
       } else {
-        // Volta para o final do carrossel
         carouselRef.current.scrollTo({ left: scrollWidth - clientWidth, behavior: 'smooth' });
       }
     }
@@ -25,7 +24,6 @@ const MovieGrid: React.FC = () => {
       if (scrollLeft + clientWidth < scrollWidth) {
         carouselRef.current.scrollBy({ left: carouselRef.current.offsetWidth, behavior: 'smooth' });
       } else {
-        // Volta para o início do carrossel
         carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
       }
     }
@@ -34,14 +32,12 @@ const MovieGrid: React.FC = () => {
   useEffect(() => {
     const carousel = carouselRef.current;
     if (carousel) {
-      // Força o rolar de volta ao início após o carregamento inicial
       carousel.scrollTo({ left: 0 });
     }
   }, [movies]);
 
   return (
     <div className="relative w-full mt-16">
-      {/* Botão para rolar para a esquerda */}
       <button
         onClick={scrollLeft}
         className={cnMerge(
@@ -53,7 +49,6 @@ const MovieGrid: React.FC = () => {
         ◀
       </button>
 
-      {/* Contêiner do carrossel */}
       <div
         ref={carouselRef}
         className={cnMerge(
@@ -75,7 +70,6 @@ const MovieGrid: React.FC = () => {
         ))}
       </div>
 
-      {/* Botão para rolar para a direita */}
       <button
         onClick={scrollRight}
         className={cnMerge(

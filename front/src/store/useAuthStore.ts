@@ -16,9 +16,7 @@ const getAuthFromLocalStorage = () => {
   };
 };
 
-// Criando a store Zustand
 const useAuthStore = create<AuthStore>((set) => {
-  // Carregar os dados do localStorage ao inicializar
   const { token, userId, userName, role } = getAuthFromLocalStorage();
 
   return {
@@ -27,9 +25,7 @@ const useAuthStore = create<AuthStore>((set) => {
     userName,
     role,
 
-    // Função para atualizar os dados de autenticação
     setAuth: (token, userId, userName, role) => {
-      // Salvar os dados no localStorage
       localStorage.setItem('token', token);
       localStorage.setItem('userId', userId);
       localStorage.setItem('userName', userName);
@@ -38,9 +34,7 @@ const useAuthStore = create<AuthStore>((set) => {
       set({ token, userId, userName, role });
     },
 
-    // Função para limpar os dados de autenticação
     clearAuth: () => {
-      // Remover os dados do localStorage
       localStorage.removeItem('token');
       localStorage.removeItem('userId');
       localStorage.removeItem('userName');

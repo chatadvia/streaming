@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../services/authService'; // Importando o serviço de login
+import { login } from '../services/authService';
 import cnMerge from './../utils/cnMerge';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Hook para navegação
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Chama o serviço de login
       await login(email, password);
-      navigate('/'); // ou a rota que você definir após login
+      navigate('/');
     } catch (error) {
       setError('Falha ao fazer login, verifique suas credenciais.');
     }
@@ -35,7 +34,7 @@ export const Login = () => {
                   className={cnMerge('w-full bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600')}
                   placeholder="Enter Email Address"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)} // Atualiza o valor de email
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -47,7 +46,7 @@ export const Login = () => {
                   className={cnMerge('w-full bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600')}
                   placeholder="Enter Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} // Atualiza o valor da senha
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
@@ -61,13 +60,13 @@ export const Login = () => {
               </div>
               <button
                 type="submit"
-                className={cnMerge('bg-indigo-900 text-white py-3 px-6 rounded w-full hover:bg-indigo-700 transition duration-300')}
+                className={cnMerge('bg-accent text-white py-3 px-6 rounded w-full hover:bg-indigo-700 transition duration-300')}
               >
                 Log In
               </button>
               <div className={cnMerge('text-center mt-6')}>
                 <p className={cnMerge('opacity-50 text-sm')}>Não tem conta?</p>
-                <a href="#" className={cnMerge('text-blue-600 hover:text-blue-800 font-medium')}>Criar Conta</a>
+                <a href="#" className={cnMerge('text-accent hover:text-accent-600 font-medium')}>Criar Conta</a>
               </div>
             </form>
           </div>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from './../store/useAuthStore';
-import RatingModal from './RatingModal'; // Importa o componente do modal
+import RatingModal from './RatingModal';
 
 interface StarsProps {
   averageVote: number;
   onRate?: (rating: number) => void;
   isRating?: boolean;
-  movieId: string; // Adicionando o movieId como prop
+  movieId: string;
 }
 
 const Stars: React.FC<StarsProps> = ({ averageVote, onRate, isRating = false, movieId }) => {
@@ -22,30 +22,29 @@ const Stars: React.FC<StarsProps> = ({ averageVote, onRate, isRating = false, mo
   const hasHalfStar = averageVote % 1 !== 0;
 
   const handleRate = (rating: number) => {
-    setSelectedRating(rating); // Define o rating selecionado
-    setIsModalOpen(true); // Abre o modal
+    setSelectedRating(rating);
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Fecha o modal
+    setIsModalOpen(false);
   };
 
   const handleRatingSubmit = () => {
     if (onRate) {
-      onRate(selectedRating); // Envia o rating via callback
+      onRate(selectedRating);
     }
     console.log(`Rating submitted: ${selectedRating}`);
-    setIsModalOpen(false); // Fecha o modal após envio
+    setIsModalOpen(false); 
   };
 
   const handleStarClickNotLogin = () => {
-    navigate('/login'); // Redireciona para login
+    navigate('/login'); 
     return;
   };
 
   return (
     <div className="flex flex-col items-center">
-      {/* Renderização das estrelas */}
       <div className="flex">
         {Array.from({ length: totalStars }, (_, index) => {
           const isFilled = index < filledStars;
@@ -58,9 +57,9 @@ const Stars: React.FC<StarsProps> = ({ averageVote, onRate, isRating = false, mo
               className={`${starClass} focus:outline-none text-3xl mx-1`}
               onClick={() => {
                 if (isLoggedIn) {
-                  handleRate(index + 1); // Abre o modal
+                  handleRate(index + 1);
                 } else {
-                  handleStarClickNotLogin(); // Redireciona para login
+                  handleStarClickNotLogin();
                 }
               }}
               aria-label={`Rate ${index + 1} stars`}
@@ -71,12 +70,11 @@ const Stars: React.FC<StarsProps> = ({ averageVote, onRate, isRating = false, mo
         })}
       </div>
 
-      {/* Modal */}
       <RatingModal
         isOpen={isModalOpen}
         initialRating={selectedRating}
-        movieId={movieId} // Passando o movieId para o modal
-        userId={userId!} // Passando o userId para o modal
+        movieId={movieId}
+        userId={userId!}
         onClose={handleCloseModal}
         onSubmit={handleRatingSubmit}
       />

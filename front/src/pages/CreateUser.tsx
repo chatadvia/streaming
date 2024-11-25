@@ -1,22 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { API_BASE_URL } from "../utils/baseUrl";
-import { getAuthToken } from "../utils/tokenUtils";
 import cnMerge from "./../utils/cnMerge";
 import { CreateUserForm, Role } from "./../types/types";
 import { createUser } from "./../services/userService";
 import { getUserId } from "../utils/userIdUtil";
-
 
 const CreateUser: React.FC = () => {
   const [formData, setFormData] = useState<CreateUserForm>({
     name: "",
     email: "",
     password: "",
-    role: Role.USER, // Inicializando com "USER", mas pode ser alterado pelo select
+    role: Role.USER,
   });
 
   const [loading, setLoading] = useState(false);
@@ -37,8 +33,8 @@ const CreateUser: React.FC = () => {
     setMessage("");
 
     try {
-      const adminId = getUserId(); // Supondo que getUserId esteja retornando o ID corretamente
-      await createUser(adminId, formData); // Passando o formData para a criação do usuário
+      const adminId = getUserId();
+      await createUser(adminId, formData);
 
       setMessage("Usuário criado com sucesso!");
       setFormData({ name: "", email: "", password: "", role: Role.USER });

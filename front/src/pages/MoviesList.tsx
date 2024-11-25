@@ -4,16 +4,14 @@ import { useMovies } from './../hooks/useMovies';
 import { Movie } from './../types/types';
 
 const MoviesList = () => {
-  const { movies } = useMovies(); // Supomos que os filmes já estão carregados
+  const { movies } = useMovies();
   const [filters, setFilters] = useState({ name: '', director: '', genre: '', actors: '' });
 
-  // Atualiza os filtros
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value.toLowerCase() }));
   };
 
-  // Aplica os filtros aos filmes
   const filteredMovies = movies.filter((movie: Movie) => {
     return (
       (filters.name ? movie.title.toLowerCase().includes(filters.name) : true) &&
@@ -63,9 +61,9 @@ const MoviesList = () => {
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredMovies.map((movie: Movie) => (
             <Link
-              to={`/movie-detail`} // Rota para a página de detalhes
+              to={`/movie-detail`}
               key={movie.id}
-              state={{ movie }} // Passa o filme como state
+              state={{ movie }}
               className="cursor-pointer border p-4 rounded shadow hover:shadow-lg transition"
             >
               <img

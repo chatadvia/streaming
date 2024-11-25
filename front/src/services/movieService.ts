@@ -3,7 +3,6 @@ import { API_BASE_URL } from '../utils/baseUrl';
 import { Movie } from '../types/types';
 import { getAuthToken } from './../utils/tokenUtils';
 
-// Função para buscar os filmes
 export const fetchMovies = async (): Promise<Movie[]> => {
   try {
     const response = await axios.get(`${API_BASE_URL}/api/v1/movies`);

@@ -12,28 +12,24 @@ export const useMovies = () => {
     actors: '',
   });
 
-  // Função para carregar os filmes
   const loadMovies = async () => {
     try {
       const data = await fetchMovies();
       setMovies(data);
-      setFilteredMovies(data); // Inicialmente, a lista filtrada é a completa
+      setFilteredMovies(data);
     } catch (error) {
       console.error('Erro ao buscar filmes:', error);
     }
   };
 
-  // Carrega os filmes ao montar o componente
   useEffect(() => {
     loadMovies();
   }, []);
 
-  // Atualiza os filtros
   const handleFilterChange = (name: string, value: string) => {
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Aplica os filtros no frontend
   const applyFilters = () => {
     const filtered = movies.filter((movie) => {
       return (
@@ -53,6 +49,6 @@ export const useMovies = () => {
     filters,
     handleFilterChange,
     applyFilters,
-    loadMovies, // Adicionado aqui
+    loadMovies,
   };
 };

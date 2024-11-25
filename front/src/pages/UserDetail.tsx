@@ -1,15 +1,12 @@
-// components/UserDetail.tsx
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { User } from '../types/types';
 import useMovieStore from './../store/useMovieStore';
 
 const UserDetail = () => {
   const location = useLocation();
-  const user: User = location.state.user; // Dados do usuário recebidos da navegação
-  const navigate = useNavigate();
+  const user: User = location.state.user; 
 
-  // Obtendo os filmes do store
   const { movies } = useMovieStore();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -17,7 +14,6 @@ const UserDetail = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Encontrar os filmes avaliados pelo usuário no store
   const userMovies = user.ratings.map((rating) => {
     const movie = movies.find((m) => m.id === rating.movieId);
     return {
@@ -52,7 +48,6 @@ const UserDetail = () => {
       return;
     }
     
-    // Aqui você pode implementar a lógica para salvar as alterações
     alert('Alterações salvas com sucesso!');
     setIsEditing(false);
     setNewPassword('');
@@ -60,7 +55,6 @@ const UserDetail = () => {
   };
 
   const toggleUserStatus = () => {
-    // Aqui você pode implementar a lógica de ativação/desativação do usuário
     const newStatus = !updatedUser.active;
     setUpdatedUser({ ...updatedUser, active: newStatus });
     alert(`Usuário agora está ${newStatus ? 'ativo' : 'inativo'}`);

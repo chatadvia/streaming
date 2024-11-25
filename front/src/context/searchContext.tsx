@@ -15,7 +15,6 @@ export const useSearch = () => {
   return context;
 };
 
-// Tipando explicitamente o 'children' como ReactNode
 interface SearchProviderProps {
   children: ReactNode;
 }

@@ -4,14 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primaryBg: '#ffffff', // Fundo principal
-        secondaryBg: '#f5f5f5', // Fundo secundário
-        text: '#121212', // Texto principal
-        accent: '#f5c518', // Amarelo do IMDb
-        border: '#ddd', // Bordas e divisores
+        primaryBg: '#ffffff',
+        secondaryBg: '#f5f5f5',
+        text: '#121212',
+        accent: '#f5c518',
+        border: '#ddd',
       },
       fontFamily: {
-        body: ['Arial', 'sans-serif'], // Fonte padrão
+        body: ['Arial', 'sans-serif'],
       },
     },
   },

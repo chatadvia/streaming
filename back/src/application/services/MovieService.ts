@@ -17,7 +17,7 @@ export class MovieService {
 
   public async create(data: CreateMovieDTO, userId: any): Promise<Movie> {
     let imageUrl = '';
-
+    console.log('service')
     const isAdmin = await checkIfAdmin(userId, this.userRepository);
 
     if (!isAdmin) {

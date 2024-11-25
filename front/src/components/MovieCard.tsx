@@ -1,4 +1,3 @@
-// MovieCard.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Movie } from '../types/types';
@@ -25,7 +24,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
       <Link
         to={`/movie-detail`}
         key={movie.id}
-        state={{ movie }} // Passando o objeto do filme como state
+        state={{ movie }}
       >
         <img
           src={movie.imageUrl}
@@ -42,8 +41,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
         </p>
         {movie.averageVote && (
           <div className="flex items-center justify-center mt-3">
-            <Stars movieId={movie.id} averageVote={Number(movie.averageVote)} /> {/* Mostrando as estrelas */}
-            <span className="ml-2 text-lg font-semibold text-text">{movie.averageVote}</span> {/* Mostrando o valor numérico */}
+            <Stars movieId={movie.id} averageVote={Number(movie.averageVote)} />
+            <span className="ml-2 text-lg font-semibold text-text">{movie.averageVote}</span>
           </div>
         )}
         <button

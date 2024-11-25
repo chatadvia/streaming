@@ -1,12 +1,11 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom'; // Importando useLocation
+import { useLocation } from 'react-router-dom';
 import { Movie } from '../types/types';
-import Stars from '../components/Stars'; // Importando o componente Stars
-
+import Stars from '../components/Stars';
 
 const MovieDetail = () => {
   const location = useLocation();
-  const { movie } = location.state as { movie: Movie }; // Recebendo o filme passado via state
+  const { movie } = location.state as { movie: Movie };
 
   return (
     <div className="container mx-auto p-4">
