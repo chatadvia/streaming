@@ -112,11 +112,12 @@ export class MovieService {
   public async updateMovieAverageVote(movieId: string): Promise<void> {
     const movieRatings = await this.movieRepository.getMovieRating(movieId);
     const totalVotes = movieRatings.length;
-
+    console.log(movieRatings)
+    console.log(totalVotes)
     const averageVote = totalVotes > 0
     ? movieRatings.reduce((acc: number, rating: RatingDTO) => acc + rating.rating, 0) / totalVotes
     : 0;
-  
+    console.log(averageVote)
     return await this.movieRepository.updateAverageVote(movieId, averageVote);
   }
   

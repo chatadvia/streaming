@@ -15,10 +15,7 @@ export const fetchMovies = async (): Promise<Movie[]> => {
 
 export const fetchMovieDetails = async (id: string) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}//api/v1/movies/${id}`, {
-      headers: {
-        Authorization: getAuthToken(),
-      },
+    const response = await axios.get(`${API_BASE_URL}/api/v1/movies/${id}`, {
     });
     return response.data;
   } catch (error) {
@@ -27,9 +24,9 @@ export const fetchMovieDetails = async (id: string) => {
   }
 };
 
-export const saveMovie = async (userId: string, movieData: Record<string, any>) => {
+export const saveMovie = async (adminId: string, movieData: Record<string, any>) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/api/v1/movies/${userId}`, movieData, {
+    const response = await axios.post(`${API_BASE_URL}/api/v1/movies/${adminId}`, movieData, {
       headers: {
         Authorization: getAuthToken(),
       },

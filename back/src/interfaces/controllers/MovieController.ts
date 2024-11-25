@@ -35,7 +35,6 @@ export class MovieController {
 
   public async getAll(res: Response): Promise<Response> {
     try {
-      console.log('allMovies')
       const movies = await this.movieService.getAll();
       return res.status(200).json(movies);
     } catch (error) {

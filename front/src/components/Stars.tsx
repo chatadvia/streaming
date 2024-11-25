@@ -34,7 +34,7 @@ const Stars: React.FC<StarsProps> = ({ averageVote, onRate, isRating = false, mo
     if (onRate) {
       onRate(selectedRating);
     }
-    console.log(`Rating submitted: ${selectedRating}`);
+    
     setIsModalOpen(false); 
   };
 

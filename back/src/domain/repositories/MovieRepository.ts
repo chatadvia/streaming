@@ -70,11 +70,19 @@ export class MovieRepository {
   }
 
   async rateMovie(movieId: string, userId: string, rating: number, comment?: string) {
-    const response =  await prisma.rating.create({
-      data: {
+    const response = await prisma.rating.upsert({
+      where: {
+        movieId_userId: { movieId, userId },
+      },
+      update: {
+        rating,
+        comment,
+      },
+      create: {
         movieId,
         userId,
         rating,
+        comment,
       },
     });
 
