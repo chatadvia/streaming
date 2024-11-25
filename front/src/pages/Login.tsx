@@ -32,7 +32,7 @@ export const Login = () => {
                   type="email"
                   id="email"
                   className={cnMerge('w-full bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600')}
-                  placeholder="Enter Email Address"
+                  placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -44,30 +44,19 @@ export const Login = () => {
                   type="password"
                   id="password"
                   className={cnMerge('w-full bg-blue-50 dark:bg-slate-700 min-h-[48px] leading-10 px-4 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600')}
-                  placeholder="Enter Password"
+                  placeholder="Senha"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
               {error && <p className="text-red-500">{error}</p>}
-              <div className={cnMerge('mb-6 flex items-center justify-between')}>
-                <div className={cnMerge('flex items-center')}>
-                  <input type="checkbox" className={cnMerge('mr-2')} id="remember-me" />
-                  <label className={cnMerge('font-normal')} htmlFor="remember-me">Remember me</label>
-                </div>
-                <a href="#" className={cnMerge('text-blue-600 hover:text-blue-800 text-sm')}>Forgot your password?</a>
-              </div>
               <button
                 type="submit"
                 className={cnMerge('bg-accent text-white py-3 px-6 rounded w-full hover:bg-indigo-700 transition duration-300')}
               >
-                Log In
+                LogIn
               </button>
-              <div className={cnMerge('text-center mt-6')}>
-                <p className={cnMerge('opacity-50 text-sm')}>Não tem conta?</p>
-                <a href="#" className={cnMerge('text-accent hover:text-accent-600 font-medium')}>Criar Conta</a>
-              </div>
             </form>
           </div>
         </div>
