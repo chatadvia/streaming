@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { saveMovie } from './../services/movieService';
 import InputField from './../components/InputField';
 import useForm from './../hooks/useForm ';
+import { getUserId } from './../utils/userIdUtil';
 
 const AddMovie = () => {
   const { formData, handleInputChange, handleFileChange, resetForm } = useForm();
@@ -25,7 +26,7 @@ const AddMovie = () => {
     setLoading(true);
 
     try {
-      const userId = localStorage.getItem('userId');
+      const userId = getUserId();
       if (!userId) {
         throw new Error('ID do usuário não encontrado.');
       }
@@ -44,6 +45,7 @@ const AddMovie = () => {
       if (formattedData.imageUrl && validateImage(formattedData.imageUrl)) {
         formDataToSend.append('imageUrl', formattedData.imageUrl);
       } else {
+        alert('Escolha um arquivo de foto');
         setLoading(false);
         return;
       }

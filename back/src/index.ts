@@ -11,7 +11,10 @@ const swaggerDocument = YAML.load('./src/docs/swagger.yaml');
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

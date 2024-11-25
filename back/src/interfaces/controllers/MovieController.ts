@@ -11,9 +11,10 @@ export class MovieController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
+
     const { title, description, genre, director, actors }: CreateMovieDTO = req.body;
     const imageUrl = req.file ? req.file.path : '';
-    const userId = req.params.id;
+    const userId = req.params.userId;
 
     try {
       const newMovie = await this.movieService.create({
@@ -34,6 +35,7 @@ export class MovieController {
 
   public async getAll(res: Response): Promise<Response> {
     try {
+      console.log('allMovies')
       const movies = await this.movieService.getAll();
       return res.status(200).json(movies);
     } catch (error) {
