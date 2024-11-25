@@ -1,0 +1,50 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react",
+    "react-hooks",
+    "import",
+    "jsx-a11y",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "import/no-unresolved": "off",
+    "import/named": "off",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off", // Desliga a regra para o React 17 ou superior
+    "@typescript-eslint/no-explicit-any": "off", // Permite o uso do tipo `any` (pode ser ajustado conforme necessário)
+    "import/order": [
+      "error",
+      { "groups": [["builtin", "external", "internal"]] }
+    ],
+    "jsx-a11y/anchor-is-valid": "off" // Desliga uma regra de acessibilidade específica
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

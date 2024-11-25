@@ -1,0 +1,472 @@
+openapi: 3.0.0
+info:
+  title: User and Movie Management API
+  description: API para gerenciamento de usuários e filmes
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000/api/v1'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
+paths:
+  /auth/login:
+    post:
+      summary: "Autenticar usuário"
+      description: "Recebe credenciais do usuário e retorna um token JWT em caso de sucesso."
+      operationId: "loginUser"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: "Email do usuário"
+                  example: "joao@dominio.com"
+                password:
+                  type: string
+                  description: "Senha do usuário"
+                  example: "senha123"
+      responses:
+        '200':
+          description: "Autenticação bem-sucedida. Retorna o token JWT."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: "Token JWT para autenticação."
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '401':
+          description: "Credenciais inválidas"
+        '500':
+          description: "Erro no servidor"
+
+  /users/admin/{id}:
+    post:
+      summary: "Cadastrar novo usuário"
+      description: "Cria um novo usuário com as informações fornecidas."
+      operationId: "createUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do usuário"
+          schema:
+            type: string
+            example: 'f13e709c-c708-4e54-a765-d0d01c778e22'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "Nome do usuário"
+                  example: "João da Silva"
+                email:
+                  type: string
+                  description: "Email do usuário"
+                  example: "joao@dominio.com"
+                password:
+                  type: string
+                  description: "Senha do usuário"
+                  example: "senha123"
+                role:
+                  type: string
+                  description: "Função do usuário"
+                  example: "USER"
+      responses:
+        '201':
+          description: "Usuário criado com sucesso"
+        '400':
+          description: "Erro ao criar usuário"
+        '500':
+          description: "Erro no servidor"
+  /users:
+    get:
+      summary: "Listar todos os usuários"
+      description: "Retorna uma lista de todos os usuários cadastrados."
+      operationId: "getAllUsers"
+      responses:
+        '200':
+          description: "Lista de usuários obtida com sucesso"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "ID do usuário"
+                      example: 1
+                    name:
+                      type: string
+                      description: "Nome do usuário"
+                      example: "João da Silva"
+                    email:
+                      type: string
+                      description: "Email do usuário"
+                      example: "joao@dominio.com"
+                    role:
+                      type: string
+                      description: "Função do usuário"
+                      example: "USER"
+        '500':
+          description: "Erro no servidor"
+
+  /users/{id}:
+    get:
+      summary: "Obter informações de um usuário"
+      description: "Retorna os detalhes do usuário especificado pelo ID."
+      operationId: "getUserById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do usuário"
+          schema:
+            type: string
+            example: 'd465c07c-102e-43c6-8ee1-8f0c98235be2'
+      responses:
+        '200':
+          description: "Informações do usuário obtidas com sucesso"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "ID do usuário"
+                    example: 1
+                  name:
+                    type: string
+                    description: "Nome do usuário"
+                    example: "João da Silva"
+                  email:
+                    type: string
+                    description: "Email do usuário"
+                    example: "joao@dominio.com"
+                  role:
+                    type: string
+                    description: "Função do usuário"
+                    example: "ADMIN"
+        '404':
+          description: "Usuário não encontrado"
+        '500':
+          description: "Erro no servidor"    
+    put:
+      summary: "Editar usuário existente"
+      description: "Edita as informações de um usuário."
+      operationId: "editUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do usuário"
+          schema:
+            type: string
+            example: 'd465c07c-102e-43c6-8ee1-8f0c98235be2'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "Novo nome do usuário"
+                  example: "João da Silva Junior"
+                email:
+                  type: string
+                  description: "Novo email do usuário"
+                  example: "joao.jr@dominio.com"
+                password:
+                  type: string
+                  description: "Nova senha do usuário"
+                  example: "novaSenha123"
+                role:
+                  type: string
+                  description: "Nova função do usuário"
+                  example: "ADMIN"
+      responses:
+        '200':
+          description: "Usuário editado com sucesso"
+        '400':
+          description: "Erro ao editar usuário"
+        '500':
+          description: "Erro no servidor"
+
+  /users/{id}/deactivate:
+    delete:
+      summary: "Desativar um usuário"
+      description: "Desativa o usuário pelo ID fornecido."
+      operationId: "deactivateUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do usuário a ser desativado."
+          schema:
+            type: string
+            example: 'd465c07c-102e-43c6-8ee1-8f0c98235be2'
+      responses:
+        '204':
+          description: "Usuário desativado com sucesso"
+        '400':
+          description: "Erro ao desativar o usuário"
+        '404':
+          description: "Usuário não encontrado"
+        '500':
+          description: "Erro no servidor"
+
+  /users/{id}/activate:
+    put:
+      summary: "Ativa um usuário"
+      description: "Desativa o usuário pelo ID fornecido."
+      operationId: "activateUser"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do usuário a ser ativado."
+          schema:
+            type: string
+            example: 'd465c07c-102e-43c6-8ee1-8f0c98235be2'
+      responses:
+        '204':
+          description: "Usuário ativado com sucesso"
+        '400':
+          description: "Erro ao sativar o usuário"
+        '404':
+          description: "Usuário não encontrado"
+        '500':
+          description: "Erro no servidor"        
+
+  /movies:
+    get:
+      summary: "Listar todos os filmes"
+      description: "Retorna uma lista com todos os filmes cadastrados no sistema."
+      operationId: "getAllMovies"
+      responses:
+        '200':
+          description: "Lista de filmes obtida com sucesso"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: "ID do filme"
+                      example: 1
+                    title:
+                      type: string
+                      description: "Título do filme"
+                      example: "O Senhor dos Anéis"
+                    description:
+                      type: string
+                      description: "Descrição do filme"
+                      example: "Uma aventura épica na Terra Média."
+                    genre:
+                      type: string
+                      description: "Gênero do filme"
+                      example: "Fantasia"
+                    director:
+                      type: string
+                      description: "Diretor do filme"
+                      example: "Peter Jackson"
+                    actors:
+                      type: array
+                      items:
+                        type: string
+                      description: "Lista de atores"
+                      example: ["Elijah Wood", "Ian McKellen"]
+        '500':
+          description: "Erro no servidor"
+  /movies/{id}:      
+    post:
+      summary: "Criação de filme com upload de imagem"
+      description: "Cria um novo filme e faz o upload da imagem"
+      operationId: "createMovie"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do usuário"
+          schema:
+            type: string
+            example: 'f13e709c-c708-4e54-a765-d0d01c778e22'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: "Título do filme"
+                genre:
+                  type: string
+                  description: "Gênero do filme"
+                director:
+                  type: string
+                  description: "Diretor do filme"
+                actors:
+                  type: array
+                  items:
+                    type: string
+                  description: "Atores do filme"
+                description:
+                  type: string
+                  description: "Descrição do filme"
+                imageUrl:
+                  type: string
+                  format: binary
+                  description: "Imagem do filme"
+      responses:
+        '201':
+          description: "Filme criado com sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '400':
+          description: "Erro de validação"
+        '500':
+          description: "Erro no servidor"
+  /movies/{id}:
+    get:
+      summary: "Obter filme pelo ID"
+      description: "Busca um filme pelo seu ID."
+      operationId: "getMovieById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do filme"
+          schema:
+            type: string
+            example: 'ea72bdf5-7636-44fd-ae1d-6e1ee6204956'
+      responses:
+        '200':
+          description: "Filme encontrado com sucesso"
+        '404':
+          description: "Filme não encontrado"
+        '500':
+          description: "Erro no servidor"
+    put:
+      summary: "Atualizar informações do filme"
+      description: "Edita as informações de um filme pelo ID."
+      operationId: "updateMovie"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do filme"
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: "Título do filme"
+                  example: "O Hobbit"
+                description:
+                  type: string
+                  description: "Nova descrição do filme"
+                  example: "Uma jornada inesperada."
+                genre:
+                  type: string
+                  description: "Novo gênero do filme"
+                  example: "Aventura"
+                director:
+                  type: string
+                  description: "Novo diretor"
+                  example: "Guillermo del Toro"
+                actors:
+                  type: array
+                  items:
+                    type: string
+                  description: "Nova lista de atores"
+                  example: ["Martin Freeman", "Richard Armitage"]
+      responses:
+        '200':
+          description: "Filme atualizado com sucesso"
+        '400':
+          description: "Erro ao atualizar filme"
+        '404':
+          description: "Filme não encontrado"
+        '500':
+          description: "Erro no servidor"
+    delete:
+      summary: "Deletar filme pelo ID"
+      description: "Remove um filme pelo seu ID."
+      operationId: "deleteMovie"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          description: "ID do filme"
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '204':
+          description: "Filme deletado com sucesso"
+        '404':
+          description: "Filme não encontrado"
+        '500':
+          description: "Erro no servidor"
+
+  /movies/rate/vote:
+    post:
+      summary: "Avaliar um filme"
+      description: "Permite que um usuário avalie um filme. A avaliação é baseada em uma nota de 1 a 5."
+      operationId: "rateMovie"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                movieId:
+                  type: string
+                  description: "ID do filme a ser avaliado"
+                  example: 'ea72bdf5-7636-44fd-ae1d-6e1ee6204956'
+                rating:
+                  type: integer
+                  description: "Nota de avaliação do filme (1 a 4)"
+                  example: 4
+      responses:
+        '200':
+          description: "Avaliação realizada com sucesso"
+        '400':
+          description: "Erro na avaliação do filme. Pode ocorrer se a nota for inválida ou se o filme não existir."
+        '500':
+          description: "Erro no servidor"
